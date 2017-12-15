@@ -5,7 +5,7 @@
 > [HiredInTech](https://www.hiredintech.com/classrooms/system-design/lesson/55)
 
 1. to clarify the system's constraints and to identify what use cases the system needs to satisfy.
-    - 弄清楚系统的作用（并发量，统计要求，失效时间等限制和用途）
+    - make sure how the system work(statistic, concurrency, time expire and use)
     - **Scope the problem: Don't make assumptions; Ask questions; Understand the constraints and use cases.**
 2. outline all the important components that your architecture will need.(abstract design)
     - try to address every constraint and use case.
@@ -19,4 +19,3 @@
     - **Address these bottlenecks by using the fundamentals principles of scalable system design.**
     - vertical scaling, horizontal scaling, caching, load balancing, database replication, database partitioning
     - Understanding these pros and cons, the advantages and disadvantages
-    -
