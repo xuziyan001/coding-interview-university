@@ -67,3 +67,60 @@ void connected_components(graph *g){
   }
 }
 ```
+
+* DFS has neat recursive implementation which eliminates the need to explicitly use a stack
+* In undirected graph, every edge is either a tree edge or a back edge
+
+```cpp
+DFS(graph *g, int v){
+  edgenode *p;
+  int y;
+  if(finished) return;
+  discovered[v] = TRUE;
+  time += 1;
+  entry.time[v] = time;
+  process_vertex_early[v];
+  p = g->edges[v];
+  whie(p != NULL){
+    y = p->y;
+    if(discovered[y] == FALSE){
+       parents[y] = v;
+       process_edge(x, y);
+       dfs(g, y);
+    }
+    else if((!processed[y]) || (g->directed)) process_edge(x, y);
+    if(finished) return;
+    p = p->next;
+  }
+  process_vertex_late;
+  time += 1;
+  exit.time[v] = time;
+  processed[v] = TRUE;
+}
+```
+
+```cpp
+// finding cycles
+// i think it's parents[y] != x
+// y must be find by x, x is y's parent
+void process_edge(int x, int y){
+  if(parents[x] != y){
+    find.path(y, x, parent);
+    finished = TRUE;
+  }
+}
+```
+
+#### Coloring Graphs
+
+Bipartite: a graph can be colored without conflicts while using only two colors. (Tree)
+
+Articulation vertex: a vertex of a connected grapg whose deletion disconnects the graph.(can be found in O(n(m+n)) delete each vertex to do a DFS on remaining graph)
+
+faster O(n+m) DFS algorithm: if v is not a leaf and some subtree of v has no back edge incident until a proper ancestor of v.
+
+Topological sorting: an ordering on the vertices so that all edges go from left to right.
+
+DAG: A directed, acyclic graph has no directed cycles.(scheduling jobs)
+
+DAGS has at least one topological sort.
