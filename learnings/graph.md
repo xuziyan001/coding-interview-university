@@ -111,16 +111,89 @@ void process_edge(int x, int y){
 }
 ```
 
-#### Coloring Graphs
+* Bipartite: a graph can be colored without conflicts while using only two colors. (Tree)
 
-Bipartite: a graph can be colored without conflicts while using only two colors. (Tree)
+* Articulation vertex: a vertex of a connected grapg whose deletion disconnects the graph.(can be found in O(n(m+n)) delete each vertex to do a DFS on remaining graph)
+  - faster O(n+m) DFS algorithm: if v is not a leaf and some subtree of v has no back edge incident until a proper ancestor of v.
 
-Articulation vertex: a vertex of a connected grapg whose deletion disconnects the graph.(can be found in O(n(m+n)) delete each vertex to do a DFS on remaining graph)
 
-faster O(n+m) DFS algorithm: if v is not a leaf and some subtree of v has no back edge incident until a proper ancestor of v.
+* Topological sorting: an ordering on the vertices so that all edges go from left to right.
+  - Identifying errors in DNA fragment assembly
+  - **find all in-degree 0 vertices and do DFS, deal with all the edgenodes out from those vertices**
 
-Topological sorting: an ordering on the vertices so that all edges go from left to right.
+```cpp
+// check if a graph is a DAG
+process_edge(int x, int y){
+  int class;
+  class = edge.classification(x, y);
+  if (class == BACK) printf("not a DAG\n");
+}
+```
 
-DAG: A directed, acyclic graph has no directed cycles.(scheduling jobs)
+* DAG: A directed, acyclic graph has no directed cycles.(scheduling jobs)
+  - DAGS has at least one topological sort.
 
-DAGS has at least one topological sort.
+
+* Weighted graph Algorithms: an alternate universe of algorithms for edge-weighted graphs.
+  - Spanning Tree: a subgraph of G which has the same set of vertices of G and is a tree.
+  - Mininum spanning tree can be generate by greedy algorithms
+  - Prim's Algorithm: **starts from one vertex and grows the rest of the tree an edge at a time, pick a minimum weight edge without creating a cycle**
+  - Kruskal's Algorithm:
+
+```cpp
+typedef struct {
+  int y;
+  int weight;
+  struct edgenode *next;
+} edgenode;
+```
+
+```cpp
+/*
+Prim-MST(G):
+  select an arbitrary vertex s to start the tree from.
+  While (there still non-tree vertices)
+    pick a minumun edge without creating a cycle, add the connected vertices into tree
+  can be done in O(nm) time by doing a DFS or BFS to loop through all edges.
+*/
+prim(graph *g, int start){
+  int i; // counter
+  edgenode *p; // temp pointer
+  bool intree[MAXV]; // is vertex in the tree
+  int distance[MAXV]; // distance from start
+  int v; // current vertex
+  int w; // candidate next vertex
+  int weight; // edge weight
+  int dist; // best current distance from start
+  // init
+  for(i=1;i<=g->nvertices;i++){
+    intree[i] = FALSE;
+    distance[i] = MAXINT;
+    parent[i] = -1
+  }
+  distance[start] = 0;
+  v = start;
+  while(intree[v] == FALSE){
+    intree[v] = TRUE;
+    p = g->edges[v];
+    while(p != NULL){
+      w = p->y;
+      weight = p->weight;
+      if((distance[w]>weight) && (intree[w] == FALSE)){
+        distance[w] = weight;
+        parent[w] = v;
+      }
+      p = p->next;
+    }
+    v = 1;
+    dist = MAXINT;
+    for(i=1; i<=g->nvertices; i++){
+      if((intree[i] == FALSE) && (dist > distance[i])){
+        dist = distance[i];
+        v = i;
+      }
+    }
+  }
+
+}
+```
