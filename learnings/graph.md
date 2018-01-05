@@ -153,7 +153,7 @@ typedef struct {
 Prim-MST(G):
   select an arbitrary vertex s to start the tree from.
   While (there still non-tree vertices)
-    pick a minumun edge without creating a cycle, add the connected vertices into tree
+    pick a minimum edge without creating a cycle, add the connected vertices into tree
   can be done in O(nm) time by doing a DFS or BFS to loop through all edges.
 */
 prim(graph *g, int start){
@@ -194,6 +194,56 @@ prim(graph *g, int start){
       }
     }
   }
+}
+```
 
+```cpp
+/*
+Dijkstra algorithms: if s,...,x...,t is the shortest path from s to t, it's better s,...,x is the shortest path from s to x
+
+-> O(n*n)
+for sparse gragh
+-> O(mlgn) using a heap of the vertices 
+-> O()
+
+*/
+dijkstra(graph *g, int start){
+  int i; // counter
+  edgenode *p; // temp pointer
+  bool intree[MAXV]; // is vertex in the tree
+  int distance[MAXV]; // distance from start
+  int v; // current vertex
+  int w; // candidate next vertex
+  int weight; // edge weight
+  int dist; // best current distance from start
+  // init
+  for(i=1;i<=g->nvertices;i++){
+    intree[i] = FALSE;
+    distance[i] = MAXINT;
+    parent[i] = -1
+  }
+  distance[start] = 0;
+  v = start;
+  while(intree[v] == FALSE){
+    intree[v] = TRUE;
+    p = g->edges[v];
+    while(p != NULL){
+      w = p->y;
+      weight = p->weight;
+      if(distance[w] > (distance[v] + weight)){ // CHANGED from prim
+        distance[w] = weight + distance[v]; // CHANGED from prim
+        parent[w] = v;
+      }
+      p = p->next;
+    }
+    v = 1;
+    dist = MAXINT;
+    for(i=1; i<=g->nvertices; i++){
+      if((intree[i] == FALSE) && (dist > distance[i])){
+        dist = distance[i];
+        v = i;
+      }
+    }
+  }
 }
 ```
